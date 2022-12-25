@@ -58,7 +58,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
           borderColor: Colors.transparent,
@@ -74,25 +74,38 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
             context.pop();
           },
         ),
-        title: Stack(
+        title: Row(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            if (!isGroupChat())
-              Text(
-                'Group Chat',
-                style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      useGoogleFonts: GoogleFonts.asMap().containsKey(
-                          FlutterFlowTheme.of(context).bodyText1Family),
-                    ),
+            Stack(
+              children: [
+                if (!isGroupChat())
+                  Text(
+                    'Group Chat',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily:
+                              FlutterFlowTheme.of(context).bodyText1Family,
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          useGoogleFonts: GoogleFonts.asMap().containsKey(
+                              FlutterFlowTheme.of(context).bodyText1Family),
+                        ),
+                  ),
+              ],
+            ),
+            Text(
+              valueOrDefault<String>(
+                widget.chatUser!.displayName,
+                'UserApp',
               ),
-            if (!isGroupChat())
-              Text(
-                widget.chatUser!.displayName!,
-                style: FlutterFlowTheme.of(context).bodyText1,
-              ),
+              style: FlutterFlowTheme.of(context).bodyText1.override(
+                    fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    useGoogleFonts: GoogleFonts.asMap().containsKey(
+                        FlutterFlowTheme.of(context).bodyText1Family),
+                  ),
+            ),
           ],
         ),
         actions: [
@@ -173,8 +186,8 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                             useGoogleFonts: GoogleFonts.asMap().containsKey(
                                 FlutterFlowTheme.of(context).bodyText1Family),
                           ),
-                  emptyChatWidget: Image.network(
-                    '',
+                  emptyChatWidget: Image.asset(
+                    'assets/images/download_(1).png',
                     width: MediaQuery.of(context).size.width * 0.76,
                   ),
                 )
